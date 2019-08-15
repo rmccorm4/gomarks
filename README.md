@@ -6,3 +6,7 @@
 - [ ] Store in a ~/.config/gomarks location (configurable)
 - [ ] Nice UI/CLI
 - [ ] Unit Tests
+- [ ] TDD
+- [ ] CI/CD
+- [ ] Code Coverage
+- [ ] Badges
