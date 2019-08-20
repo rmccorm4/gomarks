@@ -1,13 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/user"
 	"path"
-
-	"github.com/rmccorm4/gomarks/pkg/bookmark"
 )
 
 func usage() string {
@@ -57,10 +57,28 @@ func main() {
 	configDir := createConfig()
 	fmt.Println(configDir)
 
-	b := bookmark.Bookmark{
+	b := Bookmark{
 		URL:  url,
 		Tags: tags,
 	}
 	fmt.Println(b)
+
+	bookmarkFile := path.Join(configDir, "bookmarks.json")
+	// Open our jsonFile
+	jsonFile, err := os.Open(bookmarkFile)
+	// if we os.Open returns an error then handle it
+	if err != nil {
+		log.Println(err)
+	}
+	// defer the closing of our jsonFile so that we can parse it later on
+	defer jsonFile.Close()
+
+	bytes, _ := ioutil.ReadAll(jsonFile)
+	var bs Bookmarks
+	json.Unmarshal(bytes, &bs)
+	bs = append(bs, b)
+	jsonData, _ := json.MarshalIndent(bs, "", " ")
+	_ = ioutil.WriteFile(bookmarkFile, jsonData, 0755)
+	fmt.Println("Wrote JSON to", bookmarkFile)
 
 }
