@@ -74,7 +74,7 @@ func main() {
 	defer jsonFile.Close()
 
 	bytes, _ := ioutil.ReadAll(jsonFile)
-	var bs Bookmarks
+	var bs BookmarkList
 	json.Unmarshal(bytes, &bs)
 	bs = append(bs, b)
 	jsonData, _ := json.MarshalIndent(bs, "", " ")
