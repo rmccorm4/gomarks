@@ -1,4 +1,10 @@
-# gomarks
+# Go-marks
+
+<img src=https://github.com/egonelbre/gophers/blob/master/vector/fairy-tale/witch-learning.svg height=150 width=150> 
+
+📖 Store bookmarks with tags for fast lookup from the command line!
+
+----
 
 ## Testing
 
