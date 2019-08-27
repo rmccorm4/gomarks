@@ -1,5 +1,11 @@
 # gomarks
 
+## Testing
+
+```bash
+go test -v
+```
+
 ## TODO
 - [ ] Search bookmark file for URL and update tags if exists, don't duplicate tags
 - [ ] subcommand list tags
