@@ -8,7 +8,7 @@ import (
 )
 
 func TestLoadJSON(t *testing.T) {
-	example := BookmarkList{
+	expected := BookmarkList{
 		Bookmark{
 			URL:  "https://golang.org",
 			Tags: []string{"go", "google", "docs", "code"},
@@ -19,16 +19,37 @@ func TestLoadJSON(t *testing.T) {
 		},
 	}
 
-	var bookmarks BookmarkList
-	bookmarks.load("test/load.json")
+	var got BookmarkList
+	got.load("test/load.json")
 
-	if !cmp.Equal(example, bookmarks) {
-		t.Errorf("Expected: \n%v\nGot: \n%v\n", example, bookmarks)
+	if !cmp.Equal(expected, got) {
+		t.Errorf("Expected: \n%v\nGot: \n%v\n", expected, got)
 	}
 }
 
-func TestSaveJSON(t *testing.T) {
-	exampleJSON := `[
+func TestSaveJSONStruct(t *testing.T) {
+	expected := BookmarkList{
+		Bookmark{
+			URL:  "https://blog.golang.org/concurrency-is-not-parallelism",
+			Tags: []string{"go", "concurrency", "parallelism", "blog"},
+		},
+		Bookmark{
+			URL:  "https://github.com/rmccorm4/gomarks",
+			Tags: []string{"code", "github", "favorite", "bookmarks", "go"},
+		},
+	}
+	expected.save("test/save.json")
+
+	got := BookmarkList{}
+	got.load("test/save.json")
+
+	if !cmp.Equal(expected, got) {
+		t.Errorf("Expected: \n%v\nGot: \n%v\n", expected, got)
+	}
+}
+
+func TestSaveJSONFile(t *testing.T) {
+	expected := `[
   {
     "URL": "https://blog.golang.org/concurrency-is-not-parallelism",
     "Tags": [
@@ -66,7 +87,8 @@ func TestSaveJSON(t *testing.T) {
 		panic(err)
 	}
 
-	if !cmp.Equal(exampleJSON, string(bookmarksJSON)) {
-		t.Errorf("Expected: \n%v\nGot: \n%v\n", exampleJSON, string(bookmarksJSON))
+	got := string(bookmarksJSON)
+	if !cmp.Equal(expected, got) {
+		t.Errorf("Expected: \n%v\nGot: \n%v\n", expected, got)
 	}
 }
