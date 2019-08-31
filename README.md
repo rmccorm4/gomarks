@@ -27,3 +27,6 @@ go test -v
 - [ ] CI/CD
 - [ ] Code Coverage
 - [ ] Badges
+
+## Issues
+* [ ] [Vimium's](https://github.com/philc/vimium) bookmark search capabilities are pretty darn
