@@ -13,6 +13,7 @@ go test -v
 ```
 
 ## TODO
+- [ ] Use BadgerDB, store both URL:Tags and Tag:URLs as key/value pairs for simple and fast lookups
 - [ ] Search bookmark file for URL and update tags if exists, don't duplicate tags
 - [ ] subcommand list tags
 - [ ] subcommand search by tag
@@ -29,4 +30,4 @@ go test -v
 - [ ] Badges
 
 ## Issues
-* [ ] [Vimium's](https://github.com/philc/vimium) bookmark search capabilities are pretty darn
+* [ ] [Vimium's](https://github.com/philc/vimium) bookmark search capabilities are pretty darn good
