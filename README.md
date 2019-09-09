@@ -8,6 +8,13 @@
 
 ## Usage
 
+via `go build`
+```bash
+go build .
+./gomarks <url> <tag1> <tag2> ...
+```
+
+via `go run`
 ```bash
 go run . <url> <tag1> <tag2> ...
 ```
@@ -19,21 +26,20 @@ go test -v
 ```
 
 ## TODO
-- [ ] ? Use BadgerDB, store both URL:Tags and Tag:URLs as key/value pairs for simple and fast lookups
-- [ ] Search bookmark file for URL and update tags if exists, don't duplicate tags
-- [ ] subcommand list tags
-- [ ] subcommand search by tag
+- [x] Add URLs/Tags without duplicates
+- [x] List URLs by Tag, or ListAll with no args
+- [x] Store in a ~/.config/gomarks location
 - [ ] Switch to use CLI library
+- [ ] Add subcommand
+- [ ] List subcommand
+- [ ] Ability to delete tags
+- [ ] Ability to delete URLs
+- [ ] Make config file location configurable
 - [ ] Create package to import
 - [ ] Auto generate keywords for links with some naive text processing
 - [ ] Grab tags from github repos via GitHub API
-- [ ] Store in a ~/.config/gomarks location (configurable)
-- [ ] Nice UI/CLI
 - [ ] Unit Tests
-- [ ] TDD
-- [ ] CI/CD
+- [ ] CI/CD (TravisCI, Github Actions?)
 - [ ] Code Coverage
 - [ ] Badges
-
-## Issues
-* [ ] [Vimium's](https://github.com/philc/vimium) bookmark search capabilities are pretty darn good
+- [ ] BadgerDB or other database?

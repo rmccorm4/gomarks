@@ -13,3 +13,7 @@
 
 # Temp
 tmp/
+
+# Executable
+gomarks
+gm
