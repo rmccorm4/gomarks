@@ -6,6 +6,12 @@
 
 ----
 
+## Usage
+
+```bash
+go run . <url> <tag1> <tag2> ...
+```
+
 ## Testing
 
 ```bash
@@ -13,7 +19,7 @@ go test -v
 ```
 
 ## TODO
-- [ ] Use BadgerDB, store both URL:Tags and Tag:URLs as key/value pairs for simple and fast lookups
+- [ ] ? Use BadgerDB, store both URL:Tags and Tag:URLs as key/value pairs for simple and fast lookups
 - [ ] Search bookmark file for URL and update tags if exists, don't duplicate tags
 - [ ] subcommand list tags
 - [ ] subcommand search by tag
