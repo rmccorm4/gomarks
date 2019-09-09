@@ -1,0 +1,13 @@
+{
+  "https://github.com": [
+    "code",
+    "github",
+    "favorite"
+  ],
+  "https://golang.org": [
+    "go",
+    "google",
+    "docs",
+    "code"
+  ]
+}

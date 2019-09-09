@@ -1,94 +1,62 @@
 package main
 
 import (
-	"io/ioutil"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 )
 
-func TestLoadJSON(t *testing.T) {
-	expected := BookmarkList{
-		Bookmark{
-			URL:  "https://golang.org",
-			Tags: []string{"go", "google", "docs", "code"},
-		},
-		Bookmark{
-			URL:  "https://github.com",
-			Tags: []string{"code", "github", "favorite"},
-		},
+var (
+	expectedURL = BookmarkURLs{
+		"https://golang.org": []Tag{"go", "google", "docs", "code"},
+		"https://github.com": []Tag{"code", "github", "favorite"},
 	}
-
-	var got BookmarkList
-	got.load("test/load.json")
-
-	if !cmp.Equal(expected, got) {
-		t.Errorf("Expected: \n%v\nGot: \n%v\n", expected, got)
+	expectedTag = BookmarkTags{
+		"go":       []URL{"https://golang.org"},
+		"google":   []URL{"https://golang.org"},
+		"docs":     []URL{"https://golang.org"},
+		"code":     []URL{"https://golang.org", "https://github.com"},
+		"github":   []URL{"https://github.com"},
+		"favorite": []URL{"https://github.com"},
 	}
-}
+)
 
-func TestSaveJSONStruct(t *testing.T) {
-	expected := BookmarkList{
-		Bookmark{
-			URL:  "https://blog.golang.org/concurrency-is-not-parallelism",
-			Tags: []string{"go", "concurrency", "parallelism", "blog"},
-		},
-		Bookmark{
-			URL:  "https://github.com/rmccorm4/gomarks",
-			Tags: []string{"code", "github", "favorite", "bookmarks", "go"},
-		},
-	}
-	expected.save("test/save.json")
+func TestURLSaveJSONStruct(t *testing.T) {
+	expectedURL.save("test/saveURL.json")
 
-	got := BookmarkList{}
-	got.load("test/save.json")
+	var got BookmarkURLs
+	got.load("test/saveURL.json")
 
-	if !cmp.Equal(expected, got) {
-		t.Errorf("Expected: \n%v\nGot: \n%v\n", expected, got)
+	if !cmp.Equal(expectedURL, got) {
+		t.Errorf("Expected: \n%v\nGot: \n%v\n", expectedURL, got)
 	}
 }
 
-func TestSaveJSONFile(t *testing.T) {
-	expected := `[
-  {
-    "URL": "https://blog.golang.org/concurrency-is-not-parallelism",
-    "Tags": [
-      "go",
-      "concurrency",
-      "parallelism",
-      "blog"
-    ]
-  },
-  {
-    "URL": "https://github.com/rmccorm4/gomarks",
-    "Tags": [
-      "code",
-      "github",
-      "favorite",
-      "bookmarks",
-      "go"
-    ]
-  }
-]`
+func TestURLLoadJSON(t *testing.T) {
+	var got BookmarkURLs
+	got.load("test/loadURL.json")
 
-	bookmarks := BookmarkList{
-		Bookmark{
-			URL:  "https://blog.golang.org/concurrency-is-not-parallelism",
-			Tags: []string{"go", "concurrency", "parallelism", "blog"},
-		},
-		Bookmark{
-			URL:  "https://github.com/rmccorm4/gomarks",
-			Tags: []string{"code", "github", "favorite", "bookmarks", "go"},
-		},
+	if !cmp.Equal(expectedURL, got) {
+		t.Errorf("Expected: \n%v\nGot: \n%v\n", expectedURL, got)
 	}
-	bookmarks.save("test/save.json")
-	bookmarksJSON, err := ioutil.ReadFile("test/save.json")
-	if err != nil {
-		panic(err)
-	}
+}
 
-	got := string(bookmarksJSON)
-	if !cmp.Equal(expected, got) {
-		t.Errorf("Expected: \n%v\nGot: \n%v\n", expected, got)
+func TestTagSaveJSONStruct(t *testing.T) {
+	expectedTag.save("test/saveTag.json")
+
+	var got BookmarkTags
+	got.load("test/saveTag.json")
+
+	if !cmp.Equal(expectedTag, got) {
+		t.Errorf("Expected: \n%v\nGot: \n%v\n", expectedTag, got)
+	}
+}
+
+func TestTagLoadJSON(t *testing.T) {
+	var got BookmarkTags
+	got.load("test/loadTag.json")
+
+	if !cmp.Equal(expectedTag, got) {
+		t.Errorf("Expected: \n%v\nGot: \n%v\n", expectedTag, got)
 	}
 }
