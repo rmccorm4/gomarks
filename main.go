@@ -29,10 +29,11 @@ func containsHelpFlag(args []string) bool {
 	return false
 }
 
-func createConfig() string {
+func getConfigDir() string {
 	usr, _ := user.Current()
 	homeDir := usr.HomeDir
 	configDir := path.Join(homeDir, ".gomarks")
+
 	err := os.MkdirAll(configDir, 0755)
 	if err != nil {
 		log.Fatalf("[Error] %s", err)
@@ -62,39 +63,26 @@ func main() {
 
 	//helpText := "Comma separated list of tags to assign to given link. (mark URL -tags t1,t2,t3)"
 
-	fmt.Println(url)
-	fmt.Println(tags)
-	configDir := createConfig()
+	fmt.Println("URL:", url)
+	fmt.Println("Tags:", tags)
+	configDir := getConfigDir()
 	fmt.Println(configDir)
 
-	bookmarkURLsFile := path.Join(configDir, "bookmarkURLs.json")
+	//bookmarkURLsFile := path.Join(configDir, "bookmarkURLs.json")
 	bookmarkTagsFile := path.Join(configDir, "bookmarkTags.json")
 
-	bookmarkURLs := BookmarkURLs{}
+	//bookmarkURLs := BookmarkURLs{}
 	// NoOp if file doesn't exist
-	bookmarkURLs.load(bookmarkURLsFile)
+	//bookmarkURLs.load(bookmarkURLsFile)
 
 	bookmarkTags := BookmarkTags{}
 	// NoOp if file doesn't exist
 	bookmarkTags.load(bookmarkTagsFile)
 
-	// Update tags for URL or create entry if it doesn't exist
-	if existingTags, ok := bookmarkURLs[url]; ok {
-		bookmarkURLs[url] = unique(append(existingTags, tags...))
-	} else {
-		bookmarkURLs[url] = unique(tags)
-	}
+	//bookmarkURLs.add(url, tags)
+	bookmarkTags.add(tags, url)
 
-	// Add URL for tags or create entry if it doesn't exist
-	for _, tag := range tags {
-		if existingURLs, exists := bookmarkTags[tag]; exists {
-			bookmarkTags[tag] = unique(append(existingURLs, url))
-		} else {
-			bookmarkTags[tag] = []URL{url}
-		}
-	}
-
-	bookmarkURLs.save(bookmarkURLsFile)
+	//bookmarkURLs.save(bookmarkURLsFile)
 	bookmarkTags.save(bookmarkTagsFile)
 
 	bookmarkTags.listAll()
